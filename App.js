@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { WelcomePage, pressButton } from './welcome-page.js';
 // import { createStackNavigator } from "@react-navigation/stack";
 
-import Welcome from "./welcome-page.js";
+// import WelcomePage from "./welcome-page.js";
 import Forms from './form.js';
 
 // const Stack = createStackNavigator();
@@ -31,8 +31,6 @@ export default function App() {
     </View>
   )
 }
-
-
 
 const styles = StyleSheet.create({
   container: {

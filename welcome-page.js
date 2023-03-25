@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import { Button, CheckBox, Text, StyleSheet, View } from 'react-native';
+import { Button, Text, StyleSheet, View } from 'react-native';4
+import { Switch } from 'react-native';
 
 let pressButton = false;
 
@@ -17,10 +18,16 @@ function WelcomePage() {
         <View>
             <Text>Welcome to our wonderful survey that may save your life or those of your possible children one day !</Text>
             <View style={styles.checkboxContainer}>
-                <CheckBox
+                {/* <CheckBox
                   value={isSelected}
                   onValueChange={setSelection}
                   style={styles.checkbox}
+                /> */}
+                <Switch
+                  trackColor={{ false: "#767577", true: "#81b0ff" }}
+                  ios_backgroundColor="#3e3e3e"
+                  onValueChange={setSelection}
+                  value={isSelected}
                 />
                 <Text style={styles.label}>Do you agree to share your datas to be used in order to have a better understanding of women cardiovascular problem: {isSelected ? '👍' : '👎'}</Text>
             </View>
@@ -37,13 +44,13 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
-    checkboxContainer: {
+    Container: {
       flexDirection: 'row',
       marginBottom: 20,
     },
-    checkbox: {
-      alignSelf: 'center',
-    },
+    // checkbox: {
+    //   aligncheckboxSelf: 'center',
+    // },
     label: {
       margin: 8,
     },

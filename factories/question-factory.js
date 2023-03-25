@@ -14,6 +14,7 @@ export class QuestionFactory {
         QuestionBuilder.buildQuestion(7, "Do you have migraines?", QuestionType.MCQ, ["Never", "Sometimes", "Often"]),
         QuestionBuilder.buildQuestion(8, "Are you diabetic", QuestionType.Boolean, ["Yes", "No"]),
         QuestionBuilder.buildQuestion(9, "Are you someones stressed?", QuestionType.MCQ, ["Never", "Sometimes", "Often"]),
+        QuestionBuilder.buildQuestion(10, ""),
 
     ];
 }
