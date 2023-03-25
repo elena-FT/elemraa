@@ -70,6 +70,12 @@ export default function Forms() {
                 <Button title="false" onPress={() => handleBooleanAnswerChange(false)} />
             </View>
         )}
+
+        {currentQuestion.type === QuestionType.Slider && (
+            <View>
+                <Text>Slider</Text>
+            </View>
+        )}
         
         <StatusBar style="auto" />
         <View style={{ flexDirection: 'row', marginTop: 20 }}>
