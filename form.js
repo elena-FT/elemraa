@@ -6,30 +6,32 @@ import { TextInput } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import QuestionType from './class/question-type.js';
 import { Switch } from 'react-native';
-import { Button, Icon, CheckBox } from '@rneui/themed';
+import { Button, Icon, CheckBox, Badge } from '@rneui/themed';
 import { Sliders } from './class/slider.js'
-import { PieChart } from 'react-native-svg-charts';
+import PieChart from 'react-native-expo-pie-chart';
+// import { PieChart } from 'react-native-svg-charts';
 // import { Radar } from 'react-native-pathjs-charts'
 // import { RadarChart } from 'react-native-charts-wrapper';
 // import { BarChart } from 'react-native-chart-kit';
 
 
-export default function Forms() {
-    return QuestionForms()
-}
+// export default function Forms() {
+//     return QuestionForms()
+// }
+
 
 const elemraaQuestions = QuestionFactory.elemraaQuestions;
 const responses = Array(elemraaQuestions.length).fill(null);
 
-function QuestionForms() {
+export default function Forms() {
 
     
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const currentQuestion = elemraaQuestions[currentQuestionIndex];
     const [userResponse, setUserResponse] = useState('');
 
-    const handleNextQuestion = (answer) => {
-        responses[currentQuestionIndex] = [answer, elemraaQuestions[currentQuestionIndex].category]
+    const handleNextQuestion = ([id,answer]) => {
+        responses[currentQuestionIndex] = [id, answer, elemraaQuestions[currentQuestionIndex].category]
         console.log(responses)
         setCurrentQuestionIndex(currentQuestionIndex + 1);
         setUserResponse('');
@@ -41,12 +43,32 @@ function QuestionForms() {
         }
     };
 
+    const generateStats = () => {
+        let stats = []
+        let index = 0
+        let color = ['#100348', '#752AB5', '#4160DA', 'orange', 'blue', 'red', 'yellow']
+        responses.map((response) => {
+            let lst = ["<25", "25-40", "40-60", "60<"];
+            if (response != null && lst.indexOf(response[1]) !== 'string' && response[0] != 0)
+            {
+                console.log("ENTER IN IF")
+                stats.push({
+                    key: index,
+                    count: response[0],
+                    color: color[index],
+                    string: response[2]
+                })
+                index++;
+            }
+        })
+        return stats
+    }
+
     const [isCheck, setCheck] = useState(false);
 
     return (
         
         <View style={styles.container}>
-
             <Icon
               name="heartbeat"
               type="font-awesome"
@@ -60,15 +82,15 @@ function QuestionForms() {
 
             {currentQuestion.type === QuestionType.Checkbox && (
                 <View>
-                    <Text style={styles.startText}>Welcome to our wonderful survey that may save your life or those of your possible children one day !</Text>
+                    <Text style={styles.text}>Ecoute toi, écoute ton coeur. </Text>
                     <CheckBox
                         center
-                        title="Do you agree to share your datas to be used in order to have a better understanding of women cardiovascular problem"
+                        title="Cette application a pour objectif la prévention et la sensibilisation des femmes et ne remplace pas l'avis d'un professionel de santé."
                         checked={isCheck}
                         onPress={() => setCheck(!isCheck)}
                         style={styles.button}
                     />
-                    <Button title="Start survey" onPress={() => handleNextQuestion(true)} disabled={isCheck === false}
+                    <Button title="Start survey" onPress={() => handleNextQuestion([0,0])} disabled={isCheck === false}
                     buttonStyle={{
                         backgroundColor: '#6879D1',
                         borderColor: 'transparent',
@@ -87,46 +109,127 @@ function QuestionForms() {
                         value={userResponse}
                         placeholder='Type your answer here...'
                     />
-                    <Button title="Ok" type="clear" titleStyle={{ color: '#6879D1' }} onPress={() => handleNextQuestion(userResponse)} /*disabled={userResponse.length == 0}*/ />
+                    <Button title="Ok" type="clear" titleStyle={{ color: '#6879D1' }} onPress={() => handleNextQuestion([0, userResponse])} /*disabled={userResponse.length == 0}*/ />
                 </View>
             )}
 
             {currentQuestion.type === QuestionType.MCQ && (
-            <View>
-                {currentQuestion.answer.response.map((choice, index) => (
-                    <Button
-                        title={choice}
-                        radius={'md'}
-                        size="lg"
-                        key={index}
-                        buttonStyle={{ backgroundColor: '#FFFFFF' }}
-                        onPress={() => handleNextQuestion(currentQuestion.answer.response.indexOf(choice))}
-                        containerStyle={{
-                        width: 200,
-                        marginHorizontal: 50,
-                        marginVertical: 10,
-                     }}
-                     titleStyle={{ color: 'black', marginHorizontal: 20 }}
-                   />
-                ))}
-            </View>
-            )}
-
-
-            {currentQuestion.type === QuestionType.Boolean && (
                 <View>
-                    <Button style={styles.button} title="true" onPress={() => handleNextQuestion(true)}/>
-                    <Button style={styles.button} title="false" onPress={() => handleNextQuestion(false)}/>
+                    {currentQuestion.answer.response.map((choice, index) => (
+                        <Button
+                            title={choice}
+                            radius={'md'}
+                            size="lg"
+                            key={index}
+                            buttonStyle={{ backgroundColor: '#FFFFFF' }}
+                            onPress={() => handleNextQuestion([currentQuestion.answer.response.indexOf(choice), choice])}
+                            containerStyle={{
+                            width: 200,
+                            marginHorizontal: 50,
+                            marginVertical: 10,
+                        }}
+                        titleStyle={{ color: 'black', marginHorizontal: 20 }}
+                    />
+                    ))}
                 </View>
             )}
 
-
-            {currentQuestion.type === QuestionType.Result &&
-                <Text> Thank you for your time and your reponse, here some tips for you following your answers !</Text>
-            }
             
+            {currentQuestion.type === QuestionType.Tips && (
+                 <View>
+                    <Text style={styles.text}>{currentQuestion.answer.response}</Text>
+                    <Button title="Continue"
+                    icon={{
+                        name: 'arrow-right',
+                        type: 'font-awesome',
+                        size: 15,
+                        color: 'white',
+                    }}
+                    iconContainerStyle={{ marginLeft: 10 }}
+                    titleStyle={{ fontWeight: '700' }}
+                    buttonStyle={{
+                        backgroundColor: '#000',
+                        borderColor: 'transparent',
+                        borderWidth: 0,
+                        borderRadius: 30,
+                        height: 46,
+                    }}
+                    containerStyle={{
+                        marginTop: 100,
+                        width: 200,
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                        // marginBottom: 0
+                    }}
+                    onPress={() => handleNextQuestion([0,0])}/>
+                </View>
+            )}
 
+            {currentQuestion.type === QuestionType.Result && (
+                <View>
+                    <Text style={styles.text}> Thank you for your time and your reponse, here some tips for you following your answers !</Text>
+                    <Button title="See the result"
+                    icon={{
+                        name: 'arrow-right',
+                        type: 'font-awesome',
+                        size: 15,
+                        color: 'white',
+                    }}
+                    iconContainerStyle={{ marginLeft: 10 }}
+                    titleStyle={{ fontWeight: '700' }}
+                    buttonStyle={{
+                        backgroundColor: '#000',
+                        borderColor: 'transparent',
+                        borderWidth: 0,
+                        borderRadius: 30,
+                        height: 46,
+                    }}
+                    containerStyle={{
+                        marginTop: 100,
+                        width: 200,
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                        // marginBottom: 0
+                    }}
+                    onPress={() => handleNextQuestion([0,0])}/>
+                </View>
+            )}
 
+            {currentQuestion.type === QuestionType.Stat && (
+                <View style={styles.container}>
+                    {console.log(generateStats())}
+                    <PieChart style={{ marginTop: 0, padding: 0 }}
+                        data={generateStats()}
+                        length={240}
+                    />
+                    <View
+                        style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-around',
+                        marginTop: 20,
+                        marginBottom: 20,
+                        }}
+                    >
+                        {generateStats().map(stat => (
+                            <Badge status={stat.category} />
+                        ))}
+                    </View>
+                  
+                    <View
+                        style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-around',
+                        marginBottom: 20,
+                        }}
+                    >
+                        {generateStats().map(stat => (
+                            <Text style={{ color: stat.color, paddingVertical: 10 }}>{stat.string}</Text>
+                        ))}
+
+                    </View>
+                </View>
+            )}
+            
             {/*currentQuestion.type === QuestionType.Slider && (
                 <View>
                     <Sliders
@@ -175,11 +278,13 @@ function QuestionForms() {
                     borderColor: 'transparent',
                     borderWidth: 0,
                     borderRadius: 30,
+                    height: 46,
                 }}
                 containerStyle={{
                     width: 200,
                     marginLeft: 'auto',
                     marginRight: 'auto',
+                    // marginBottom: 0
                 }}
                 onPress={handlePreviousQuestion} disabled={currentQuestionIndex === 1}
             />
@@ -201,6 +306,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         // paddingHorizontal: 20,
         // paddingVertical: 40,
+        // marginBottom: 50
     },
     button: {
         backgroundColor: 'rgba(78, 116, 289, 1)',
@@ -233,6 +339,7 @@ const styles = StyleSheet.create({
         padding: 10,
         marginBottom: 20,
         width: '100%',
+        width: 250,
     },
     h2: {
         fontFamily: 'Nunito-Regular',
@@ -248,12 +355,15 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         margin: 20
     },
-    startText: {
+    text: {
         fontFamily: 'Nunito-Bold',
         fontWeight: '500',
-        fontSize: 35,
+        fontSize: 25,
         color: 'black',
         textAlign: 'center',
         margin: 20
+    },
+    check: {
+        marginTop: 100,
     }
 });

@@ -4,17 +4,20 @@ import { QuestionBuilder } from "./question-builder";
 
 export class QuestionFactory {
     static elemraaQuestions = [
-        QuestionBuilder.buildQuestion(0, "Elemraa", QuestionType.Checkbox, ["Man", "Woman"]),
-        QuestionBuilder.buildQuestion(1, "What is your rank age?", QuestionType.MCQ, [">25", "26-30", "31-35", "36-40", "41-45", "46-50", "51-55", "<55"]),
-        QuestionBuilder.buildQuestion(2, "what is your weight", QuestionType.Text),
-        QuestionBuilder.buildQuestion(3, "what is your size?", QuestionType.Text),
-        QuestionBuilder.buildQuestion(4, "Do you smoke?", QuestionType.MCQ, ["Yes", "No"]),
-        QuestionBuilder.buildQuestion(5, "Do you drink?", QuestionType.MCQ, ["Never", "Sometimes", "Often", "Daily"]),
-        QuestionBuilder.buildQuestion(6, "Do you have a family history?", QuestionType.Text),
-        QuestionBuilder.buildQuestion(7, "Do you have migraines?", QuestionType.MCQ, ["Never", "Sometimes", "Often"]),
-        QuestionBuilder.buildQuestion(8, "Are you diabetic", QuestionType.MCQ, ["Yes", "No"]),
-        QuestionBuilder.buildQuestion(9, "Are you someones stressed?", QuestionType.MCQ, ["Never", "Sometimes", "Often"]),
-        QuestionBuilder.buildQuestion(10, "Thank you !", QuestionType.Result),
+        QuestionBuilder.buildQuestion(0, "Elemraa", QuestionType.Checkbox),
+        QuestionBuilder.buildQuestion(1, "Quelle est votre tranche d'âge", QuestionType.MCQ, ["<25", "25-40", "40-60", "60<"]),
+        QuestionBuilder.buildQuestion(2, "Quel est votre poids ?", QuestionType.Text),
+        QuestionBuilder.buildQuestion(3, "Quel est votre taille (cm) ?", QuestionType.Text),
+        QuestionBuilder.buildQuestion(4, "Est-ce que vous fumez ?", QuestionType.MCQ, ["Jamais", "Parfois", "Souvent", "Régulièrement"], "Tabac"),
+        QuestionBuilder.buildQuestion(5, "Est-ce que vous consommez de l'alcool ?", QuestionType.MCQ, ["Jamais", "Parfois", "Souvent", "Régulièrement"], "Alcool"),
+        QuestionBuilder.buildQuestion(6, "Avez-vous des antécédents familiaux cardiovasculaire ?", QuestionType.MCQ, ["Non", "Oui"], "Antécédents"),
+        QuestionBuilder.buildQuestion(7, "Etes-vous diabétique ?", QuestionType.MCQ, ["Non", "Oui"], "Diabète"),
+        QuestionBuilder.buildQuestion(8, "Est-ce que vous prenez la pillule contraceptive ?", QuestionType.MCQ, ["Non", "Oui"], "Facteurs hormonaux"),
+        QuestionBuilder.buildQuestion(9, "Nombres de grossesses ?", QuestionType.MCQ, ["0-1", "2-3", "3<"], "Facteurs homonaux"),
+        QuestionBuilder.buildQuestion(10, "Tips 1 : grosesse", QuestionType.Tips, ['Le tips est top'], ""),
+        QuestionBuilder.buildQuestion(12, "Comment décririez-vous votrer flux menstruels ?", QuestionType.MCQ, ["Faible", "Modérée", "Abondante"], "Facteurs hormonaux"),
+        QuestionBuilder.buildQuestion(13, "Thank you !", QuestionType.Result),
+        QuestionBuilder.buildQuestion(14, "", QuestionType.Stat),
 
     ];
 }
