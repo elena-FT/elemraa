@@ -1,11 +1,16 @@
 import React from 'react';
 
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ImageBackground } from 'react-native';
 import { WelcomePage, pressButton } from './welcome-page.js';
+import { useState } from 'react';
 // import { createStackNavigator } from "@react-navigation/stack";
 
 // import WelcomePage from "./welcome-page.js";
 import Forms from './form.js';
+import { Switch, Button } from 'react-native';
+
+// import QRCode from 'qrcode.react';
+
 
 // const Stack = createStackNavigator();
 
@@ -19,24 +24,16 @@ import Forms from './form.js';
 // }
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-    {/* {pressButton === false && ( */}
-       <WelcomePage />
-    {/* )} */}
-
-    {/* {pressButton === true && ( */}
+  return(
+  <ImageBackground source={require('./assets/new.png')} style={styles.background}>
        <Forms />
-    {/* )} */}
-    </View>
-  )
+  </ImageBackground>)
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  background: {
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flex: 1,
+    resizeMode: 'cover', // adapter la taille de l'image à la taille de l'écran
   },
 });

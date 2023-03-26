@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Button, Text, StyleSheet, View } from 'react-native';4
+import { Button, Text, StyleSheet, View } from 'react-native';
 import { Switch } from 'react-native';
 
 let pressButton = false;

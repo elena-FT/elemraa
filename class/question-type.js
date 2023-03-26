@@ -3,7 +3,9 @@ const QuestionType = {
     Text: 1,
     MCQ: 2,
     Slider: 3,
-    StepSlider: 4
+    StepSlider: 4,
+    Checkbox: 5,
+    Result: 6
   };
   
 export default QuestionType;  
