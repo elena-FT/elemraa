@@ -4,10 +4,11 @@ import { StyleSheet, View, ImageBackground } from 'react-native';
 import { WelcomePage, pressButton } from './welcome-page.js';
 import { useState } from 'react';
 // import { createStackNavigator } from "@react-navigation/stack";
-
+// import { NavigationContainer } from '@react-navigation/native';
 // import WelcomePage from "./welcome-page.js";
 import Forms from './form.js';
 import { Switch, Button } from 'react-native';
+import QuestionHeader from './question-header.js';
 
 // import QRCode from 'qrcode.react';
 
@@ -26,7 +27,9 @@ import { Switch, Button } from 'react-native';
 export default function App() {
   return(
   <ImageBackground source={require('./assets/new.png')} style={styles.background}>
-       <Forms />
+       {/* <NavigationContainer> */}
+          <Forms />
+       {/* </NavigationContainer> */}
   </ImageBackground>)
 }
 
